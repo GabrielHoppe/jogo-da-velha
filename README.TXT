@@ -1,12 +1,8 @@
-------------------------------------------------------------------------
-This is the project README file. Here, you should describe your project.
-Tell the reader (someone who does not know anything about this project)
-all they need to know. The comments should usually include at least:
-------------------------------------------------------------------------
-
-PROJECT TITLE:
-PURPOSE OF PROJECT:
-VERSION or DATE:
-HOW TO START THIS PROJECT:
-AUTHORS:
+PROJECT TITLE: Tic-Tac-Toe
+PURPOSE OF PROJECT: learn about arrays
+VERSION or DATE: 2022
+HOW TO START THIS PROJECT: Start with main()
+AUTHORS: marco.mangan@pucrs.br
 USER INSTRUCTIONS:
+Choose line and column from 0, 1, or 2.
+-1 to end program
