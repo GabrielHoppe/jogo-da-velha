@@ -56,6 +56,8 @@ class TicTacToe {
     }
 
     /**
+     * Run
+     * 
      * @param
      */
     public static void main(String[] args) {
@@ -69,6 +71,7 @@ class TicTacToe {
         sc = new Scanner(System.in);
         while (true) {
             System.out.println(display(board));
+            System.out.printf("%nJogador: %s%n", player);
             i = sc.nextInt();
             if (i < 0)
                 break;
