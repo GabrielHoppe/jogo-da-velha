@@ -55,6 +55,49 @@ class TicTacToe {
         }
     }
 
+    
+    /**
+     * 
+     */
+    public static boolean isVictory(String[][] board, String player) {
+        for (int i = 0; i < board.length; i++) {
+            
+            if (board[i][0].equals(player) &&
+                board[i][1].equals(player) && 
+                board[i][2].equals(player)
+            ) {
+                return true;
+            }
+            
+        }
+
+        for (int j = 0; j < board.length; j++) {
+            
+            if (board[0][j].equals(player) &&
+                board[1][j].equals(player) && 
+                board[2][j].equals(player)
+            ) {
+                return true;
+            }
+            
+        }
+        
+        if (board[0][0].equals(player) &&
+                board[1][1].equals(player) && 
+                board[2][2].equals(player)
+            ) {
+                return true;
+            }
+        if (board[0][2].equals(player) &&
+                board[1][1].equals(player) && 
+                board[2][0].equals(player)
+            ) {
+                return true;
+            }
+        
+        return false;
+    }
+    
     /**
      * Run
      * 
@@ -84,6 +127,11 @@ class TicTacToe {
                 break;
 
             set(board, i, j, player);
+            
+            if (isVictory(board, player)) {
+                System.out.printf("O jogador %s venceu!%n", player);
+                break;
+            }
 
             if (player.equals("x")) {
                 player = "o";
