@@ -72,10 +72,16 @@ class TicTacToe {
         while (true) {
             System.out.println(display(board));
             System.out.printf("%nJogador: %s%n", player);
+
+            System.out.printf("%nLinha (0, 1, 2 ou -1 para sair):");
             i = sc.nextInt();
             if (i < 0)
                 break;
+                
+            System.out.printf("%nColuna (0, 1, 2 ou -1 para sair):");
             j = sc.nextInt();
+            if (j < 0)
+                break;
 
             set(board, i, j, player);
 
