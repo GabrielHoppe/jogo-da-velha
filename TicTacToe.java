@@ -20,6 +20,7 @@ class TicTacToe {
                 b[i][j] = " ";
             }
         }
+        assert b != null : "O board nao pode ser null!";
         return b;
     }
 
@@ -29,8 +30,13 @@ class TicTacToe {
      * @param board a 3x3 board
      */
     public static String display(String[][] board) {
-        String r = "";
-        System.out.println("  012");
+        assert board != null : "O board nao pode ser null!";
+        
+        //if (board == null) {
+        //    throw new IllegalArgumentException("O board nao pode ser null!");
+        //}
+        
+        String r = "  012\n";
         for (int i = 0; i < board.length; i++) {
             r += i + "|";
             for (int j = 0; j < board[i].length; j++) {
@@ -137,13 +143,16 @@ class TicTacToe {
 
             System.out.printf("%nLinha (0, 1, 2 ou -1 para sair):");
             i = sc.nextInt();
-            if (i < 0)
-                break;
-
+            if (i < 0) {
+                System.out.printf("%nJogador %s desistiu! Vitoria do oponente!%n", player);
+                break;                
+            }
             System.out.printf("%nColuna (0, 1, 2 ou -1 para sair):");
             j = sc.nextInt();
-            if (j < 0)
-                break;
+            if (j < 0) {
+                System.out.printf("%nJogador %s desistiu! Vitoria do oponente!%n", player);
+                break;                
+            }
 
             set(board, i, j, player);
 
