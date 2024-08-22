@@ -17,7 +17,7 @@ class TicTacToe {
         String[][] b = new String[3][3];
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {
-                b[i][j] = " ";
+                b[i][j] = "| |";
             }
         }
         assert b != null : "O board nao pode ser null!";
@@ -29,20 +29,33 @@ class TicTacToe {
      * 
      * @param board a 3x3 board
      */
-    public static String display(String[][] board) {
+    public static String display(String[][] board,int axis) {
         assert board != null : "O board nao pode ser null!";
         
         //if (board == null) {
         //    throw new IllegalArgumentException("O board nao pode ser null!");
         //}
         
-        String r = "  012\n";
+        String r = "";
+
+        if (axis == 1 || axis ==3){
+        r += "  0  1  2\n";
+        }else{
+            r += "\n";
+        }
         for (int i = 0; i < board.length; i++) {
-            r += i + "|";
+
+            if (axis == 0 || axis == 3){
+            r += i + " ";
+            }else{
+                r += " ";
+            }
+
+
             for (int j = 0; j < board[i].length; j++) {
                 r += board[i][j];
             }
-            r += "|\n";
+            r += "\n";
         }
         return r;
     }
@@ -55,10 +68,15 @@ class TicTacToe {
      * @param
      * @param
      */
-    public static void set(String[][] b, int i, int j, String p) {
-        if (b[i][j].equals(" ")) {
-            b[i][j] = p;
+    public static boolean set(String[][] b, int i, int j, String p) {
+
+        if (i<=2 && j<=2 && i>=-1 && j>=-1){
+            if (b[i][j].equals("| |")) {
+                b[i][j] = p;
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -66,8 +84,8 @@ class TicTacToe {
      */
     public static boolean isVictory(String[][] board, String player) {
         for (int i = 0; i < board.length; i++) {
-
-            if (board[i][0].equals(player) &&
+            
+            if (board[i][0].equals(player) && //confere vitorias nas 3 colunas
             board[i][1].equals(player) && 
             board[i][2].equals(player)
             ) {
@@ -78,7 +96,7 @@ class TicTacToe {
 
         for (int j = 0; j < board.length; j++) {
 
-            if (board[0][j].equals(player) &&
+            if (board[0][j].equals(player) && //confere vitorias nas 3 linhas
             board[1][j].equals(player) && 
             board[2][j].equals(player)
             ) {
@@ -87,13 +105,13 @@ class TicTacToe {
 
         }
 
-        if (board[0][0].equals(player) &&
+        if (board[0][0].equals(player) && //diagonal 1
         board[1][1].equals(player) && 
         board[2][2].equals(player)
         ) {
             return true;
         }
-        if (board[0][2].equals(player) &&
+        if (board[0][2].equals(player) && //diagonal 2
         board[1][1].equals(player) && 
         board[2][0].equals(player)
         ) {
@@ -109,7 +127,7 @@ class TicTacToe {
     public static boolean hasFreeCell(String[][] board) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                if (board[i][j].equals(" ")) {
+                if (board[i][j].equals("| |")) {
                     return true; // encerra ao encontrar a primeira celula livre
                 }
             }
@@ -127,17 +145,24 @@ class TicTacToe {
         String[][] board;
         String player = "x";
         int i, j;
+        boolean setted = true;
+        
 
         System.out.println("Jogo da Velha!");
         board = init();
         sc = new Scanner(System.in);
         while (true) {
-            System.out.println(display(board));
+
+            do{
+                
+            System.out.println(display(board,0));
 
             if (!hasFreeCell(board)) {
                 System.out.printf("%nEMPATE!%n");
                 break;                
             }
+
+            
 
             System.out.printf("%nJogador: %s%n", player);
 
@@ -147,6 +172,9 @@ class TicTacToe {
                 System.out.printf("%nJogador %s desistiu! Vitoria do oponente!%n", player);
                 break;                
             }
+
+            System.out.println(display(board,1));
+
             System.out.printf("%nColuna (0, 1, 2 ou -1 para sair):");
             j = sc.nextInt();
             if (j < 0) {
@@ -154,9 +182,13 @@ class TicTacToe {
                 break;                
             }
 
-            set(board, i, j, player);
+            setted = set(board, i, j, "|"+player+"|");
+            if (setted == false){
+                System.out.print("Posicao invalida! Jogue novamente");
+            }
+            }while(setted == false);
 
-            if (isVictory(board, player)) {
+            if (isVictory(board, "|"+player+"|")) {
                 System.out.printf("%nO jogador %s venceu!%n", player);
                 break;
             }
@@ -167,7 +199,7 @@ class TicTacToe {
                 player = "x";
             }
         }
-        System.out.println(display(board));
+        System.out.println(display(board,3));
 
         sc.close();
     }
