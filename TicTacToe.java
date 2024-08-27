@@ -13,11 +13,12 @@ class TicTacToe {
      * 
      * @return a 3x3 board
      */
-    public static String[][] init() {
-        String[][] b = new String[3][3];
+    public static Cell[][] init() {
+        Cell[][] b = new Cell[3][3];
         for (int i = 0; i < b.length; i++) {
             for (int j = 0; j < b[i].length; j++) {
-                b[i][j] = "| |";
+                Cell cell = new Cell(i,j);
+                b[i][j] = cell;
             }
         }
         assert b != null : "O board nao pode ser null!";
@@ -29,12 +30,8 @@ class TicTacToe {
      * 
      * @param board a 3x3 board
      */
-    public static String display(String[][] board,int axis) {
+    public static String display(Cell[][] board,int axis) {
         assert board != null : "O board nao pode ser null!";
-        
-        //if (board == null) {
-        //    throw new IllegalArgumentException("O board nao pode ser null!");
-        //}
         
         String r = "";
 
@@ -53,7 +50,7 @@ class TicTacToe {
 
 
             for (int j = 0; j < board[i].length; j++) {
-                r += board[i][j];
+                r += board[i][j].toString();
             }
             r += "\n";
         }
@@ -68,11 +65,11 @@ class TicTacToe {
      * @param
      * @param
      */
-    public static boolean set(String[][] b, int i, int j, String p) {
+    public static boolean set(Cell[][] b, int i, int j, String p) {
 
         if (i<=2 && j<=2 && i>=-1 && j>=-1){
-            if (b[i][j].equals("| |")) {
-                b[i][j] = p;
+            if (b[i][j].getHasPlayer() == false) {
+                b[i][j].setHasPlayer(true,p);
                 return true;
             }
         }
@@ -82,12 +79,12 @@ class TicTacToe {
     /**
      * 
      */
-    public static boolean isVictory(String[][] board, String player) {
+    public static boolean isVictory(Cell[][] board, String player) {
         for (int i = 0; i < board.length; i++) {
             
-            if (board[i][0].equals(player) && //confere vitorias nas 3 colunas
-            board[i][1].equals(player) && 
-            board[i][2].equals(player)
+            if (board[i][0].getPlayer().equalsIgnoreCase(player) && //confere vitorias nas 3 colunas
+            board[i][1].getPlayer().equalsIgnoreCase(player) && 
+            board[i][2].getPlayer().equalsIgnoreCase(player)
             ) {
                 return true;
             }
@@ -96,24 +93,24 @@ class TicTacToe {
 
         for (int j = 0; j < board.length; j++) {
 
-            if (board[0][j].equals(player) && //confere vitorias nas 3 linhas
-            board[1][j].equals(player) && 
-            board[2][j].equals(player)
+            if (board[0][j].getPlayer().equalsIgnoreCase(player) && //confere vitorias nas 3 linhas
+            board[1][j].getPlayer().equalsIgnoreCase(player) && 
+            board[2][j].getPlayer().equalsIgnoreCase(player)
             ) {
                 return true;
             }
 
         }
 
-        if (board[0][0].equals(player) && //diagonal 1
-        board[1][1].equals(player) && 
-        board[2][2].equals(player)
+        if (board[0][0].getPlayer().equalsIgnoreCase(player) && //diagonal 1
+        board[1][1].getPlayer().equalsIgnoreCase(player) && 
+        board[2][2].getPlayer().equalsIgnoreCase(player)
         ) {
             return true;
         }
-        if (board[0][2].equals(player) && //diagonal 2
-        board[1][1].equals(player) && 
-        board[2][0].equals(player)
+        if (board[0][2].getPlayer().equalsIgnoreCase(player) && //diagonal 2
+        board[1][1].getPlayer().equalsIgnoreCase(player) && 
+        board[2][0].getPlayer().equalsIgnoreCase(player)
         ) {
             return true;
         }
@@ -124,15 +121,24 @@ class TicTacToe {
     /**
      * 
      */
-    public static boolean hasFreeCell(String[][] board) {
+    public static boolean hasFreeCell(Cell[][] board) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                if (board[i][j].equals("| |")) {
+                if (board[i][j].getHasPlayer() == false) {
                     return true; // encerra ao encontrar a primeira celula livre
                 }
             }
         }
         return false;
+    }
+
+
+    public static void clearBoard(Cell[][] board){
+        for (int i = 0; i< board.length; i++){
+            for (int j = 0; j< board[i].length; j++){
+                board[i][j].clear();
+            }
+        }
     }
 
     /**
@@ -142,25 +148,43 @@ class TicTacToe {
      */
     public static void main(String[] args) {
         Scanner sc;
-        String[][] board;
+        Cell[][] board;
         String player = "x";
         int i, j;
         boolean setted = true;
-        
+        int modeInput;
+        int playAgainInput;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
         System.out.println("Jogo da Velha!");
         board = init();
         sc = new Scanner(System.in);
-        while (true) {
 
-            do{
-                
-            System.out.println(display(board,0));
+
+        System.out.println("Escolha o modo de jogo:");
+        System.out.println("[1] Normal");
+        System.out.println("[2] Modo Infinito");
+
+        do{
+            modeInput = sc.nextInt();
+        }
+        while (modeInput < 1 && modeInput > 2);
+
+        do{
+
+        while (true) {
 
             if (!hasFreeCell(board)) {
                 System.out.printf("%nEMPATE!%n");
+                setted = true;
                 break;                
             }
+
+            do{
+                
+                
+            System.out.println(display(board,0));
+
+            
 
             
 
@@ -182,24 +206,38 @@ class TicTacToe {
                 break;                
             }
 
-            setted = set(board, i, j, "|"+player+"|");
+            setted = set(board, i, j, player);
             if (setted == false){
                 System.out.print("Posicao invalida! Jogue novamente");
             }
             }while(setted == false);
 
-            if (isVictory(board, "|"+player+"|")) {
+            if (modeInput == 2){
+                for (int y = 0; y < board.length; y++) {
+                    for (int l = 0; l < board[y].length; l++) {
+                        board[y][l].timePassed(); 
+                    }
+                }
+            }
+
+            if (isVictory(board, player)) {
                 System.out.printf("%nO jogador %s venceu!%n", player);
                 break;
             }
 
-            if (player.equals("x")) {
+            if (player.equalsIgnoreCase("x")) {
                 player = "o";
             } else {
                 player = "x";
             }
         }
         System.out.println(display(board,3));
+
+        System.out.println("Aperte [1] para jogar novamente");
+        playAgainInput = sc.nextInt();
+
+        clearBoard(board);
+        }while(playAgainInput == 1);
 
         sc.close();
     }
