@@ -36,9 +36,13 @@ public class Cell {
         }
         time --;
         if (time <= 0){
-            hasPlayer = false;
-            playerType = " ";
+            clear();
         }
+    }
+
+    public void clear(){
+        hasPlayer = false;
+        playerType = " ";
     }
 
     public void setHasPlayer(boolean hasPlayer, String playerType){
